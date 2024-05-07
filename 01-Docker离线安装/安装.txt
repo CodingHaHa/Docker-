@@ -1,0 +1,20 @@
+解压docker-19.0.3.1.tar.gz
+复制其中的所有文件到/usr/bin目录下
+
+为docker-compose-Linux-x86_64增加执行权限
+复制docker-compose-Linux-x86_64 到/usr/bin 目录下 并改名为docker-compose
+
+
+docker.service：存放到/etc/systemd/system/docker.service
+
+设置docker服务开机自动重启
+systemctl enable docker.service
+
+关闭selinux
+vim /etc/selinux/config
+SELINUX=disabled
+
+重启服务器
+reboot
+
+
