@@ -1,0 +1,9 @@
+国产化适配：
+    x86架构：
+    arm64架构：麒麟系统，Linux localhost.localdomain 4.19.90-24.4.v2101.ky10.aarch64 #1 SMP Mon May 24 14:45:37 CST 2021 aarch64 aarch64 aarch64 GNU/Linux
+
+
+phatomjs：在windows、x86的Linux下可以正常使用，但是在arm64架构下，官方没有相关安装包，并且自行尝试在arm64架构的Linux系统上编译源码后无法正常执行；
+nodejs+canvas:在arm64架构的麒麟v10系统下可以跑
+
+

@@ -1,0 +1,16 @@
+
+一、参考内容
+参考内容：https://apache.github.io/echarts-handbook/zh/how-to/cross-platform/server/
+
+项目地址：
+
+二、思路
+* 第一步：先在当前架构的服务器上编译项目（echarts-export-server）安装好，并且保证可以在宿主机服务器上正常通过echarts生成图片
+* 第二步：选择合适的arm64架构的Linux基础镜像（由于项目需要yum来安装底层依赖库，所以找到了一个centos8的docker镜像）
+* 第三步：通过Dockerfile制作镜像，时一定要保证安装和宿主机一样版本的nodejs(nodejs:12 )和npm
+
+三、可能会遇到的问题
+* 底层依赖库找不到：制作docker镜像时，可能会遇到很多问题；比如，某个底层依赖库找不到，需要我们自己找到相关的安装包进行安装。
+* 中文乱码：需要自己想办法解决
+* 生成的图片中文展示异常：需要添加字体
+* 输出日志：修改index.js代码输出日志到文件/src/logs/中

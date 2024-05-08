@@ -1,0 +1,14 @@
+FROM centos:centos8
+USER root
+
+RUN cd /etc/yum.repos.d/ && sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* &&  dnf module -y install nodejs:12 && yum install gcc-c++ cairo-devel libjpeg-turbo-devel pango-devel -y
+COPY echarts-export-server /echarts-export-server
+COPY base-installs  /echarts-export-server
+COPY windows_brief /usr/share/fonts
+WORKDIR /echarts-export-server/
+RUN yum localinstall libgif7-5.2.2-150000.4.13.1.aarch64.rpm  giflib-devel-5.2.2-150000.4.13.1.aarch64.rpm  -y &&  yum localinstall glibc-langpack-zh-2.28-164.el8.aarch64.rpm glibc-locale-source-2.28-164.el8.aarch64.rpm -y && echo LANG=zh_CN.UTF-8 > /etc/locale.conf && source /etc/locale.conf && export LANG=zh_CN.UTF-8 && sed -i '41 s/en_US/zh_CN/g' /etc/profile.d/lang.sh && source /etc/profile.d/lang.sh && yum install glibc-common -y &&  yum -y install glibc-locale-source glibc-langpack-en &&  localedef -c -f UTF-8 -i zh_CN zh_CN.utf8 &&  yum localinstall libfontenc-1.1.3-8.el8.aarch64.rpm xorg-x11-font-utils-7.5-41.el8.aarch64.rpm -y &&  yum install mkfontscale -y &&  cd /usr/share/fonts/ &&  mkfontscale && mkfontdir && fc-cache &&  yum clean all && yum clean packages && yum clean dbcache && chmod +x /echarts-export-server/entrypoint.sh
+
+ENV LC_ALL zh_CN.UTF-8
+EXPOSE 3000
+ENTRYPOINT [ "/echarts-export-server/entrypoint.sh" ]
+
